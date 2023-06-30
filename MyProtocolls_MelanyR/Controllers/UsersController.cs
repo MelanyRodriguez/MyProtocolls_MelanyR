@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyProtocolls_MelanyR.Atributtes;
 using MyProtocolls_MelanyR.Models;
 
 namespace MyProtocolls_MelanyR.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKeyAtributte]
     public class UsersController : ControllerBase
     {
         private readonly MyProtocolsBDContext _context;
@@ -93,26 +95,6 @@ namespace MyProtocolls_MelanyR.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool UserExists(int id)
