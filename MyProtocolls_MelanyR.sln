@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyProtocolls_MelanyR", "MyProtocolls_MelanyR\MyProtocolls_MelanyR.csproj", "{EC4FEC9F-0538-4E96-9151-66D1C3D54F6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC4FEC9F-0538-4E96-9151-66D1C3D54F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4FEC9F-0538-4E96-9151-66D1C3D54F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4FEC9F-0538-4E96-9151-66D1C3D54F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4FEC9F-0538-4E96-9151-66D1C3D54F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77074ED8-3933-4C96-922E-969CFFB39C95}
+	EndGlobalSection
+EndGlobal
