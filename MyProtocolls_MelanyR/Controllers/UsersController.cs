@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace MyProtocolls_MelanyR.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiKeyAtributte]
+    //[ApiKeyAtributte]
     public class UsersController : ControllerBase
     {
         private readonly MyProtocolsBDContext _context;
@@ -21,6 +22,27 @@ namespace MyProtocolls_MelanyR.Controllers
         {
             _context = context;
         }
+
+        //Este get valida el usario que quiere ingresar en la app
+        // GET: api/Users
+        [HttpGet("ValidarLogin")]
+        public async Task<ActionResult<User>> ValidateLogin(string username, string password)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(e => e.Email.Equals(username) &&
+                                                                 e.Password==password);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+
+
+
+
+
 
         // GET: api/Users
         [HttpGet]
