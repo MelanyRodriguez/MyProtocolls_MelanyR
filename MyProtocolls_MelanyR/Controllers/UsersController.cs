@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProtocolls_MelanyR.Atributtes;
 using MyProtocolls_MelanyR.Models;
+using MyProtocolls_MelanyR.ModelsDTs;
 
 namespace MyProtocolls_MelanyR.Controllers
 {
@@ -38,12 +39,6 @@ namespace MyProtocolls_MelanyR.Controllers
             return Ok(user);
         }
 
-
-
-
-
-
-
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -72,6 +67,62 @@ namespace MyProtocolls_MelanyR.Controllers
 
             return user;
         }
+        // GET: api/Users
+        [HttpGet("{GetUserInfoByEmail}")]
+        public ActionResult<IEnumerable<UserDTO>> GetUserInfoByEmail(string Pemail)
+        {
+            //aca creamos un linq que convina informacion de dos entidades 
+            //(user iner join userrole) y la agrega en el objeto de DTO user
+
+            var query =(from u in _context.Users
+                        join ur in _context.UserRoles on
+                        u.UserRoleId equals ur.UserRoleId
+                        where u.Email == Pemail && u.Active==true &&
+                        u.IsBlocked==false
+                        
+                        select new
+                        {
+                            UsuarioId= u.UserId,
+                            correo = u.Email,
+                            Contrasenia=u.Password,
+                            Nombre=u.Name,
+                            RespaldoCorreo=u.BackUpEmail,
+                            Telefono=u.PhoneNumber,
+                            Direccion=u.Address,
+                            Activo=u.Active,
+                            EstaBloqueado=u.IsBlocked,
+                            IDRolUsuario=ur.UserRoleId,
+                            DescripcionRol = ur.Description
+                        }).ToList();
+
+            //creamos un objeto de tipo que retorna la funcion
+            List<UserDTO> list = new List<UserDTO>();
+            foreach (var item in query)
+            {
+                UserDTO NewItem = new UserDTO()
+                { 
+                UsuarioId = item.UsuarioId,
+                Correo = item.correo,
+                Contrasenia = item.Contrasenia,
+                Nombre = item.Nombre,
+                RespaldoCorreo = item.RespaldoCorreo,
+                Telefono = item.Telefono,
+                Direccion = item.Direccion,
+                Activo = item.Activo,
+                EstaBloqueado = item.EstaBloqueado,
+                IDRolUsuario = item.IDRolUsuario,
+                DescripcionRol = item.DescripcionRol
+                
+                 };
+                
+                list .Add(NewItem);
+                
+
+        }
+            if (list == null) { return NotFound(); }
+            return list;
+        }
+
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -125,3 +176,7 @@ namespace MyProtocolls_MelanyR.Controllers
         }
     }
 }
+
+
+
+
