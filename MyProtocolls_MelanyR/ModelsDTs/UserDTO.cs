@@ -16,10 +16,5 @@
         public int IDRolUsuario { get; set; }
         public string DescripcionRol { get; set; } = null!;
 
-        //funciones
-         public async Task<UserDTO> GetUserInfo(string PEmail)
-        {
-
-        }
     }
 }

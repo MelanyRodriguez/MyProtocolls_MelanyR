@@ -127,14 +127,30 @@ namespace MyProtocolls_MelanyR.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserDTO user)
         {
-            if (id != user.UserId)
+            if (id != user.UsuarioId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            //tenemos que hacer la conversion entre el DTO que llega en formato json
+            //(en el header) y el objeto que entity framework entiende que es de tipo
+
+           User? newEFUser = new User();
+
+            newEFUser= GetUserByID(id);
+
+            if (newEFUser!=null)
+            {
+                newEFUser.Email = user.Correo;
+                newEFUser.Name = user.Nombre;
+                newEFUser.BackUpEmail = user.RespaldoCorreo;
+                newEFUser.PhoneNumber = user.Telefono;
+                newEFUser.Address = user.Direccion;
+
+                _context.Entry(newEFUser).State = EntityState.Modified;
+            }
 
             try
             {
@@ -152,7 +168,7 @@ namespace MyProtocolls_MelanyR.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Users
@@ -174,6 +190,13 @@ namespace MyProtocolls_MelanyR.Controllers
         {
             return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
+
+        private User? GetUserByID(int id)
+        {
+            var user = _context.Users.Find(id);
+            return user;
+        }
+
     }
 }
 
