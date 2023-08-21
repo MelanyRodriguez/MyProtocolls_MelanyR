@@ -21,8 +21,8 @@ namespace MyProtocolls_MelanyR.Models
         public int UserId { get; set; }
         public int ProtocolCategory { get; set; }
 
-        public virtual ProtocolCategory ProtocolCategoryNavigation { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
+        public virtual ProtocolCategory? ProtocolCategoryNavigation { get; set; } = null!;
+        public virtual User? User { get; set; } = null!;
 
         public virtual ICollection<ProtocolStep> ProtocolStepProtocolSteps { get; set; }
     }

@@ -12,7 +12,7 @@ namespace MyProtocolls_MelanyR.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiKeyAtributte]
+    //[ApiKeyAtributte]
     public class ProtocolsController : ControllerBase
     {
         private readonly MyProtocolsBDContext _context;
@@ -50,6 +50,26 @@ namespace MyProtocolls_MelanyR.Controllers
 
             return protocol;
         }
+
+
+
+        public async Task<ActionResult<IEnumerable<Protocol>>> GetProtocolListByUser(int id)
+        {
+            if (_context.Protocols == null)
+            {
+                return NotFound();
+            }
+            var protocolList = await _context.Protocols.Where(p=> p.UserId.Equals(id)).ToListAsync();
+
+            if (protocolList == null)
+            {
+                return NotFound();
+            }
+
+            return protocolList;
+        }
+
+
 
         // PUT: api/Protocols/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
